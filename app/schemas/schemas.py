@@ -60,3 +60,22 @@ class ProblemListItem(BaseModel):
     time_limit_ms: int
     memory_limit_mb: int
     model_config = {"from_attributes": True}
+
+from app.models.models import Language, Verdict
+
+class SubmissionCreate(BaseModel):
+    problem_id: int
+    code: str
+    language: Language
+
+class SubmissionOut(BaseModel):
+    id: int
+    problem_id: int
+    user_id: int
+    language: str
+    status: str
+    verdict: Optional[str]
+    time_ms: Optional[int]
+    memory_kb: Optional[int]
+    submitted_at: datetime
+    model_config = {"from_attributes": True}
