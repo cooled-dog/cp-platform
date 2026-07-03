@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.db.session import engine, Base
 import app.models.models
 from app.api.routes import auth
+from app.api.routes import auth, problems
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -12,6 +13,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="CP Platform", lifespan=lifespan)
 app.include_router(auth.router)
+app.include_router(problems.router)
 
 @app.get("/health")
 async def health():
