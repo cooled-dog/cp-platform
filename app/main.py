@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.db.session import engine, Base
-import app.models.models   # import so SQLAlchemy sees the models before create_all
+import app.models.models
+from app.api.routes import auth
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -10,7 +11,8 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="CP Platform", lifespan=lifespan)
+app.include_router(auth.router)
 
-@app.get("/")
+@app.get("/health")
 async def health():
     return {"status": "ok"}
