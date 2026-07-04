@@ -6,6 +6,7 @@ from app.db.session import get_db
 from app.models.models import Submission, Problem, User, Verdict
 from app.schemas.schemas import SubmissionCreate, SubmissionOut
 from app.services.rate_limiter import check_rate_limit, seconds_until_retry
+from app.workers.judge_worker import enqueue
 
 router = APIRouter(prefix="/submissions", tags=["submissions"])
 
@@ -38,6 +39,7 @@ async def create_submission(
     db.add(submission)
     await db.flush()
     await db.refresh(submission)
+    await enqueue(submission.id)
     return submission
 
 

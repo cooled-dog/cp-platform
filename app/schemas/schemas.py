@@ -79,3 +79,9 @@ class SubmissionOut(BaseModel):
     memory_kb: Optional[int]
     submitted_at: datetime
     model_config = {"from_attributes": True}
+
+class LeaderboardEntry(BaseModel):
+    user_id: int
+    username: str
+    problems_solved: int
+    total_penalty_ms: int
