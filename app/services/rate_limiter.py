@@ -18,6 +18,7 @@ def check_rate_limit(user_id: int) -> bool:
     window.append(now)
     return True
 
+
 def seconds_until_retry(user_id: int) -> int:
     window = _windows[user_id]
     if not window:
